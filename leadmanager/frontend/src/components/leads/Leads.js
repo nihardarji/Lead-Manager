@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLeads } from '../../actions/leadActions'
+import { deleteLead, getLeads } from '../../actions/leadActions'
 
 const Leads = () => {
     const dispatch = useDispatch()
@@ -12,6 +12,10 @@ const Leads = () => {
     useEffect(() => {
         dispatch(getLeads())
     },[dispatch])
+
+    const deleteHandler = (id) => {
+        dispatch(deleteLead(id))
+    }
 
     return (
         <div>
@@ -33,7 +37,14 @@ const Leads = () => {
                             <td>{lead.name}</td>
                             <td>{lead.email}</td>
                             <td>{lead.message}</td>
-                            <td><Button variant="danger" size='sm'>Delete</Button></td>
+                            <td>
+                                <Button 
+                                    onClick={() => deleteHandler(lead.id)} 
+                                    variant="danger" 
+                                    size='sm'
+                                >
+                                    Delete
+                                </Button></td>
                         </tr>
                     ))}
                 </tbody>
