@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_LEAD, DELETE_LEAD, GET_LEADS } from './types'
+import { ADD_LEAD, DELETE_LEAD, GET_ERRORS, GET_LEADS } from './types'
 
 // GET LEADS
 export const getLeads = () => async dispatch => {
@@ -39,6 +39,13 @@ export const addLead = (lead) => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.log(error)
+        const errors = {
+            msg: error.response.data,
+            status: error.response.status
+        }
+        dispatch({
+            type: GET_ERRORS,
+            payload: errors
+        })
     }
 }
