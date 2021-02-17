@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch ./leadmanager/frontend/src/index.js --output-path ./leadmanager/frontend/static/frontend/",
-    "build": "webpack --mode production ./leadmanager/frontend/src/index.js -o ./leadmanager/frontend/static/frontend/"
+    "dev": "webpack --mode development --watch --output-path ./leadmanager/frontend/static/frontend/",
+    "build": "webpack --mode production --output-path ./leadmanager/frontend/static/frontend/"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,9 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@babel/polyfill": "^7.12.1",
     "axios": "^0.21.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",

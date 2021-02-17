@@ -1,4 +1,8 @@
 module.exports = {
+    entry: [
+        '@babel/polyfill', 
+        './leadmanager/frontend/src/index.js'
+    ],
     module: {
         rules: [
             {
