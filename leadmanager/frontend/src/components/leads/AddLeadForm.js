@@ -15,6 +15,9 @@ const AddLeadForm = () => {
     const submitHandler = e => {
         e.preventDefault()
         dispatch(addLead({ name, email, message }))
+        setName('')
+        setEmail('')
+        setMessage('')
     }
 
     return (

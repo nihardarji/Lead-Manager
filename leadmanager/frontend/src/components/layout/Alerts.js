@@ -6,6 +6,7 @@ const Alerts = () => {
     const alert = useAlert()
     
     const alertReducers = useSelector(state => state.alertReducers)
+    const messageReducers = useSelector(state => state.messageReducers)
 
     useEffect(() => {
         if(alertReducers.status){
@@ -16,7 +17,13 @@ const Alerts = () => {
             if(alertReducers.msg.message)
                 alert.error(`Message: ${alertReducers.msg.message.join()}`)
         }
-    }, [alertReducers])
+        if(messageReducers){
+            if(messageReducers.deleteLead)
+                alert.success(messageReducers.deleteLead)
+            if(messageReducers.addLead)
+                alert.success(messageReducers.addLead)
+        }
+    }, [alertReducers, messageReducers])
 
     return (
         <div></div>
