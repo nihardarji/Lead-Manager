@@ -8,6 +8,9 @@ import { Container } from 'react-bootstrap'
 import Header from './layout/Header'
 import Dashboard from './leads/Dashboard'
 import Alerts from './layout/Alerts'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import Register from './accounts/Register'
+import Login from './accounts/Login'
 
 // Alert Options
 const alertOptions = {
@@ -18,11 +21,17 @@ const alertOptions = {
 export const App = () => {
     return (
         <AlertProvider template={AlertTemplate} {...alertOptions} >
-            <Header />
-            <Alerts />
-            <Container>
-                <Dashboard />
-            </Container>
+            <Router>
+                <Header />
+                <Alerts />
+                <Container>
+                    <Switch>
+                        <Route exact path='/' component={Dashboard} />
+                        <Route exact path='/register' component={Register} />
+                        <Route exact path='/login' component={Login} />
+                    </Switch>
+                </Container>
+            </Router>
         </AlertProvider>
     )
 }
