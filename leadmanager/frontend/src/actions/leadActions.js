@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { createMessage } from './messageActions'
+import { createMessage, returnErrors } from './messageActions'
 import { ADD_LEAD, DELETE_LEAD, GET_ERRORS, GET_LEADS, RESET_ERRORS } from './types'
 
 // GET LEADS
@@ -12,7 +12,7 @@ export const getLeads = () => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.log(error)
+        dispatch(returnErrors(error.response.data, error.response.status))
     }
 }
 
@@ -44,14 +44,6 @@ export const addLead = (lead) => async dispatch => {
 
         dispatch(createMessage({ addLead: 'Lead Added' }))
     } catch (error) {
-        const errors = {
-            msg: error.response.data,
-            status: error.response.status
-        }
-        dispatch({
-            type: GET_ERRORS,
-            payload: errors
-        })
-        setTimeout(() => dispatch({ type: RESET_ERRORS }), 1000)
+        dispatch(returnErrors(error.response.data, error.response.status))
     }
 }
