@@ -1,4 +1,4 @@
-import { DELETE_LEAD, GET_LEADS } from "../actions/types"
+import { ADD_LEAD, DELETE_LEAD, GET_LEADS } from "../actions/types"
 
 const initialState = {
     leads: []
@@ -17,7 +17,13 @@ export default (state = initialState, action) => {
                 ...state,
                 leads: state.leads.filter(lead => lead.id !== action.payload)
             }
-    
+        
+        case ADD_LEAD:
+            return {
+                ...state,
+                leads: [...state.leads, action.payload]
+            }
+
         default:
             return state
     }

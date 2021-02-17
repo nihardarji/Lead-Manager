@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DELETE_LEAD, GET_LEADS } from './types'
+import { ADD_LEAD, DELETE_LEAD, GET_LEADS } from './types'
 
 // GET LEADS
 export const getLeads = () => async dispatch => {
@@ -23,6 +23,20 @@ export const deleteLead = (id) => async dispatch => {
         dispatch({
             type: DELETE_LEAD,
             payload: id
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// ADD LEAD
+export const addLead = (lead) => async dispatch => {
+    try {
+        const { data } = await axios.post(`/api/leads/`, lead)
+
+        dispatch({
+            type: ADD_LEAD,
+            payload: data
         })
     } catch (error) {
         console.log(error)

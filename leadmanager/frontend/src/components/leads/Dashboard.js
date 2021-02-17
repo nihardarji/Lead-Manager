@@ -1,11 +1,11 @@
 import React from 'react'
-import Form from './Form'
+import AddLeadForm from './AddLeadForm'
 import Leads from './Leads'
 
 const Dashboard = () => {
     return (
         <>
-            <Form />
+            <AddLeadForm />
             <Leads />
         </>
     )
