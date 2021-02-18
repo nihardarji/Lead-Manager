@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <div>
             <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Lead Manager</Navbar.Brand>
+                <Link className='navbar-brand' to='/'>Lead Manager</Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">

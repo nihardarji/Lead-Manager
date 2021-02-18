@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+
 import store from '../store'
 import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import { Container } from 'react-bootstrap'
+
+import PrivateRoute from './common/PrivateRoute'
 import Header from './layout/Header'
 import Dashboard from './leads/Dashboard'
 import Alerts from './layout/Alerts'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Register from './accounts/Register'
 import Login from './accounts/Login'
+import { loadUser } from '../actions/authActions'
 
 // Alert Options
 const alertOptions = {
@@ -19,6 +23,11 @@ const alertOptions = {
 }
 
 export const App = () => {
+
+    useEffect(() => {
+        store.dispatch(loadUser())
+    }, [])
+
     return (
         <AlertProvider template={AlertTemplate} {...alertOptions} >
             <Router>
@@ -26,7 +35,7 @@ export const App = () => {
                 <Alerts />
                 <Container>
                     <Switch>
-                        <Route exact path='/' component={Dashboard} />
+                        <PrivateRoute exact path='/' component={Dashboard} />
                         <Route exact path='/register' component={Register} />
                         <Route exact path='/login' component={Login} />
                     </Switch>
