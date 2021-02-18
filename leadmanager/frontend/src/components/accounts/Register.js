@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { register } from '../../actions/authActions'
+import { createMessage } from '../../actions/messageActions'
 
-const Register = () => {
+const Register = ({ history }) => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
 
+    const dispatch = useDispatch()
+
+    const authReducers = useSelector(state => state.authReducers)
+    const { isAuthenticated } = authReducers
+
+    useEffect(() => {
+        if(isAuthenticated){
+            history.push('/')
+        }
+    }, [isAuthenticated]) 
+
     const submitHandler = e => {
         e.preventDefault()
+        if(password !== password2){
+            dispatch(createMessage({ passwordsNotMatch: 'Password do not match' }))
+        } else {
+            dispatch(register({ username, password, email }))
+        }
     }
 
     return (

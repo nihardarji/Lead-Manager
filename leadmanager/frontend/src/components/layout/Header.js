@@ -22,6 +22,9 @@ const Header = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     {isAuthenticated ? (
                         <Nav className="ml-auto">
+                            <Navbar.Text className='mr-3' style={{ textTransform: 'capitalize' }}>
+                                {user && `Welcome ${user.username}`}
+                            </Navbar.Text>
                             <Button className='btn btn-dark nav-link' onClick={logoutHandler}>Logout</Button>
                         </Nav>
                     ) : (
