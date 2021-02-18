@@ -1,14 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
+import { login } from '../../actions/authActions'
 
-const Login = () => {
+const Login = ({ history }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
+    const dispatch = useDispatch()
+
+    const authReducers = useSelector(state => state.authReducers)
+    const { isAuthenticated } = authReducers
+    
+    useEffect(() => {
+        if(isAuthenticated){
+            history.push('/')
+        }
+    }, [isAuthenticated]) 
+
     const submitHandler = e => {
         e.preventDefault()
+        dispatch(login(username, password))   
     }
+
 
     return (
         <Col xs={12} lg={7} className='m-auto'>
