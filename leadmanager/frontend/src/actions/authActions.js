@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { returnErrors } from './messageActions'
-import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, USER_LOADED, USER_LOADING } from './types'
+import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_LOADED, USER_LOADING } from './types'
 
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => async (dispatch, getState) => {
@@ -56,5 +56,30 @@ export const login = (username, password) => async dispatch => {
     } catch (error) {
         dispatch(returnErrors(error.response.data, error.response.status))
         dispatch({ type: LOGIN_FAIL })
+    }
+}
+
+// LOGOUT USER
+export const logout = () => async (dispatch, getState) => {
+    try {
+        const token = getState().authReducers.token
+
+        // Headers
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        //  If Token add to headers config
+        if(token){
+            config.headers['Authorization'] = `Token ${token}`
+        }
+
+        await axios.post('/api/auth/logout', null, config)
+
+        dispatch({ type: LOGOUT_SUCCESS })
+    } catch (error) {
+        dispatch(returnErrors(error.response.data, error.response.status))
     }
 }
