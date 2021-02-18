@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messageActions'
-import { ADD_LEAD, DELETE_LEAD, GET_ERRORS, GET_LEADS, RESET_ERRORS } from './types'
+import { tokenConfig } from './authActions'
+import { ADD_LEAD, DELETE_LEAD, GET_LEADS } from './types'
+
 
 // GET LEADS
-export const getLeads = () => async dispatch => {
+export const getLeads = () => async (dispatch, getState) => {
     try {
-        const { data } = await axios.get('/api/leads/')
+        const { data } = await axios.get('/api/leads/', tokenConfig(getState))
 
         dispatch({
             type: GET_LEADS,
@@ -17,9 +19,9 @@ export const getLeads = () => async dispatch => {
 }
 
 // DELETE LEAD
-export const deleteLead = (id) => async dispatch => {
+export const deleteLead = (id) => async (dispatch, getState) => {
     try {
-        const { data } = await axios.delete(`/api/leads/${id}/`)
+        await axios.delete(`/api/leads/${id}/`, tokenConfig(getState))
 
         dispatch({
             type: DELETE_LEAD,
@@ -33,9 +35,9 @@ export const deleteLead = (id) => async dispatch => {
 }
 
 // ADD LEAD
-export const addLead = (lead) => async dispatch => {
+export const addLead = (lead) => async (dispatch, getState) => {
     try {
-        const { data } = await axios.post(`/api/leads/`, lead)
+        const { data } = await axios.post(`/api/leads/`, lead, tokenConfig(getState))
 
         dispatch({
             type: ADD_LEAD,
